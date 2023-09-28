@@ -1,9 +1,9 @@
-import Footer from "../components/Footer";
+import Card from "../components/Card";
 
 const MovieList = () => {
   return (
     <div>
-      <h1>Movie List Page</h1>
+      <Card></Card>
     </div>
   );
 };
