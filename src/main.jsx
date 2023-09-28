@@ -3,36 +3,21 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Root from "./routes/Root";
+import MovieList from "./pages/MovieList";
+import MovieDetail from "./pages/MovieDetail";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
-    errorElement: <PagesNotFound></PagesNotFound>,
     children: [
       {
         path: "/",
         element: <MovieList></MovieList>,
       },
       {
-        path: "/movie/:id",
+        path: "/movie-detail",
         element: <MovieDetail></MovieDetail>,
-      },
-      {
-        path: "/movies/popular",
-        element: <MovieList></MovieList>,
-      },
-      {
-        path: "/movies/top",
-        element: <MovieList></MovieList>,
-      },
-      {
-        path: "/movies/upcoming",
-        element: <MovieList></MovieList>,
-      },
-      {
-        path: "/search",
-        element: <search></search>,
       },
     ],
   },

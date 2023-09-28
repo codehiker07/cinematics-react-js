@@ -1,7 +1,9 @@
+import Footer from "../components/Footer";
+
 const MovieList = () => {
   return (
     <div>
-      <h2>MovieList</h2>
+      <h1>Movie List Page</h1>
     </div>
   );
 };
