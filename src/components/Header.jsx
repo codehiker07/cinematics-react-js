@@ -1,9 +1,21 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, json } from "react-router-dom";
 import Logo from "../assets/logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [hidden, setHidden] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) || false
+  );
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const activeClass =
     "text-base block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500";
@@ -13,7 +25,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className="bg-white border-b-2 border-gray-200 dark:bg-gray-900 dark: border-b-1 dark:border-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to="/" className="flex items-center">
             <img src={Logo} className="h-8 mr-3" alt="Cinematics Logo" />
@@ -21,7 +33,39 @@ const Header = () => {
               Cinematics
             </span>
           </Link>
-          <div className="flex md:order-2">
+          <div id="mobile-nav" className="flex md:order-2">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              id="theme-toggle"
+              data-tooltip-target="tooltip-toggle"
+              type="button"
+              className="text-gray-500 inline-flex items-center justify-center dark:text-gray-400 hover:bg-gray-100 w-9 h-9 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-md text-sm p-2 lg:mr-4"
+            >
+              {darkMode ? (
+                <svg
+                  id="theme-toggle-dark-icon"
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 18 20"
+                >
+                  <path d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"></path>
+                </svg>
+              ) : (
+                <svg
+                  id="theme-toggle-light-icon"
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-11a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1Zm0 12a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1ZM4.343 5.757a1 1 0 0 0 1.414-1.414L4.343 2.929a1 1 0 0 0-1.414 1.414l1.414 1.414Zm11.314 8.486a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM4 10a1 1 0 0 0-1-1H1a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1Zm15-1h-2a1 1 0 1 0 0 2h2a1 1 0 0 0 0-2ZM4.343 14.243l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414a1 1 0 0 0-1.414-1.414ZM14.95 6.05a1 1 0 0 0 .707-.293l1.414-1.414a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 .707 1.707Z"></path>
+                </svg>
+              )}
+            </button>
+
             <button
               onClick={() => setHidden(!hidden)}
               type="button"
@@ -101,10 +145,10 @@ const Header = () => {
             </button>
           </div>
           <div
+            id="nav-links"
             className={`items-center justify-between ${
               hidden ? "hidden" : ""
             } w-full md:flex md:w-auto md:order-1`}
-            id="navbar-search"
           >
             <div className="relative mt-3 md:hidden">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

@@ -2,9 +2,9 @@ import Card from "../components/Card";
 
 const MovieList = () => {
   return (
-    <div>
+    <main>
       <Card></Card>
-    </div>
+    </main>
   );
 };
 
